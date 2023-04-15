@@ -1,4 +1,5 @@
 const express = require('express');
+const retrieveUser = require('./MongoDB');
 
 const app = express();
 const PORT = 3001;
