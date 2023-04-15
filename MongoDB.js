@@ -1,26 +1,8 @@
-const { MongoClient } = require('mongodb');
-const uri = process.env.MONGO_URI;
-const client = new MongoClient(uri);
-require('dotenv').config();
+const mongoose = require('mongoose');
 
-async function retrieveUser(email) {
-    let object;
-
-    await client.connect()
-    const db = client.db(process.env.DB);
-    const coll = db.collection('users');
-    const cursor = coll.find({ 'user.email': email });
-    await cursor.forEach(
-        session => {
-            object = session
-        }
-    );
-
-    setTimeout(() => {
-        client.close();
-    }, 1500)
-
-    return object;
+const connectDB = async () => {
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+    console.log(`MongoDB Connected: ${conn.connection.host}`.cyan.underline.bold)
 }
 
-module.exports = { retrieveUser };
+module.exports = connectDB;
