@@ -1,8 +1,11 @@
 const express = require('express');
-const retrieveUser = require('./MongoDB');
+const connectDB = require('./MongoDB');
+require('dotenv').config();
 
 const app = express();
 const PORT = 3001;
+
+connectDB();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
