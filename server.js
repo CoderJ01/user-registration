@@ -28,7 +28,7 @@ const retrieveUser = async (userEmail) => {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get('/verify/:email/:token', async (req, res) => {
+app.get('/auth/verify/:email/:token', async (req, res) => {
     let user = retrieveUser(req.params.email);
     
     jwt.verify(req.params.token, process.env.SECRET_KEY, function(err, decoded) {
