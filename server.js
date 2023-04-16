@@ -10,27 +10,17 @@ const PORT = 3002;
 
 connectDB();
 
-const retrieveUser = async (userEmail) => {
-    let object;
-
+const updateUser = async (userEmail) => {
     await client.connect()
     const db = client.db(process.env.DB);
-    const cursor = await db.collection('users').findOne({ email: userEmail });
-    object = cursor;
-    
-    setTimeout(() => {
-        client.close();
-    }, 1500)
-
-    return object;
+    await db.collection('users').findOneAndUpdate({ email: userEmail }, { $set: { verified: true }});
+    client.close();
 }
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get('/auth/verify/:email/:token', async (req, res) => {
-    const user = await retrieveUser(req.params.email);
-    
+app.get('/auth/verify/:email/:token', async (req, res) => {    
     jwt.verify(req.params.token, process.env.SECRET_KEY, function(err, decoded) {
         if (err) {
             console.log(err);
@@ -38,8 +28,7 @@ app.get('/auth/verify/:email/:token', async (req, res) => {
         }
         else {
             res.send('Email verifified successfully. You are able to login now.');
-            user.verified = true;
-            user.save();
+            updateUser(req.params.email);
         }
     });
 });
