@@ -6,7 +6,7 @@ const client = new MongoClient(process.env.MONGO_URI);
 const jwt = require('jsonwebtoken');
 
 const app = express();
-const PORT = 3001;
+const PORT = 3002;
 
 connectDB();
 
@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.get('/auth/verify/:email/:token', async (req, res) => {
-    let user = retrieveUser(req.params.email);
+    const user = await retrieveUser(req.params.email);
     
     jwt.verify(req.params.token, process.env.SECRET_KEY, function(err, decoded) {
         if (err) {
