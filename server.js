@@ -10,7 +10,7 @@ const PORT = 3002;
 
 connectDB();
 
-const updateUser = async (userEmail) => {
+const updateUserZelp = async (userEmail) => {
     await client.connect()
     const db = client.db(process.env.DB);
     await db.collection('users').findOneAndUpdate({ email: userEmail }, { $set: { verified: true }});
@@ -28,7 +28,7 @@ app.get('/auth/verify/:email/:token', async (req, res) => {
         }
         else {
             res.send('Email verifified successfully. You are able to login now.');
-            updateUser(req.params.email);
+            updateUserZelp(req.params.email);
         }
     });
 });
