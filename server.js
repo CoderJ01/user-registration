@@ -28,6 +28,17 @@ const updateUserZelp = async (userEmail) => {
     client.close();
 }
 
+const updateUserTestMaker = async (userEmail) => {
+    let query = `UPDATE users SET verified = true WHERE email = '${userEmail}'`;
+
+    sequelize.query(query, (error, results, fields) => {
+        if(error) {
+            return console.error(error.message);
+        }
+        console.log('Rows affected:', results.affectedRows);
+    });
+}
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -54,6 +65,7 @@ app.get('/testmaker/auth/verify/:email/:token', async (req, res) => {
         }
         else {
             res.send('Email verifified successfully. You are able to login now.');
+            updateUserTestMaker(req.params.email);
         }
     });
 });
