@@ -45,6 +45,19 @@ app.get('/auth/verify/:email/:token', async (req, res) => {
     });
 });
 
+// Test Maker
+app.get('/testmaker/auth/verify/:email/:token', async (req, res) => {    
+    jwt.verify(req.params.token, process.env.SECRET_KEY, function(err, decoded) {
+        if (err) {
+            console.log(err);
+            res.send('Email verification failed, possibly the link is invalid or expired');
+        }
+        else {
+            res.send('Email verifified successfully. You are able to login now.');
+        }
+    });
+});
+
 sequelize.sync({ force: false }).then(() => {
     app.listen(PORT, console.log(`Listening on PORT ${PORT}...`));
 });
