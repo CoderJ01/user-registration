@@ -12,6 +12,11 @@ const jwt = require('jsonwebtoken');
 
 // other imports
 const connectDB = require('./MongoDB');
+const Sequelize = require('sequelize');
+
+const sequelize = new Sequelize(process.env.CLEAR_DB_DATABASE);
+
+module.exports = sequelize;
 
 const client = new MongoClient(process.env.MONGO_URI);
 
@@ -43,6 +48,8 @@ app.get('/auth/verify/:email/:token', async (req, res) => {
     });
 });
 
-app.listen(PORT, console.log(`Listening at port: ${PORT}...`));
+sequelize.sync({ force: false }).then(() => {
+    app.listen(PORT, console.log(`Listening on PORT ${PORT}...`));
+});
 
 module.exports = app;
