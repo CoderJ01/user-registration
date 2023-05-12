@@ -31,6 +31,7 @@ const updateUserZelp = async (userEmail) => {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Zelp
 app.get('/auth/verify/:email/:token', async (req, res) => {    
     jwt.verify(req.params.token, process.env.SECRET_KEY, function(err, decoded) {
         if (err) {
