@@ -1,9 +1,19 @@
-const { MongoClient } = require('mongodb');
+// Express.js
 const express = require('express');
-const connectDB = require('./MongoDB');
+
+// dotenv
 require('dotenv').config();
-const client = new MongoClient(process.env.MONGO_URI);
+
+// MongoDB
+const { MongoClient } = require('mongodb');
+
+// other Node.js packages
 const jwt = require('jsonwebtoken');
+
+// other imports
+const connectDB = require('./MongoDB');
+
+const client = new MongoClient(process.env.MONGO_URI);
 
 const app = express();
 const PORT = 3002;
