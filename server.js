@@ -29,7 +29,7 @@ const updateUserZelp = async (userEmail) => {
 }
 
 const updateUserTestMaker = async (userEmail) => {
-    let query = `UPDATE users SET verified = true WHERE email = '${userEmail}'`;
+    let query = `UPDATE user SET verified = true WHERE email = '${userEmail}'`;
 
     sequelize.query(query, (error, results, fields) => {
         if(error) {
